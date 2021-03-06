@@ -20,8 +20,14 @@ module.exports = (sequelize, DataTypes) => {
     imageUrl: DataTypes.STRING,
     imageDesc: DataTypes.STRING,
     categoryId: DataTypes.INTEGER,
-    topByCategory: DataTypes.ENUM,
-    topByNews: DataTypes.ENUM
+    topByCategory: {
+      type:DataTypes.ENUM,
+      values: ['0', '1']
+    },
+    topByNews: {
+      type:DataTypes.ENUM,
+      values: ['0', '1']
+    }
   }, {
     sequelize,
     modelName: 'News',

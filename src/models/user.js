@@ -14,15 +14,28 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   User.init({
-    id: DataTypes.INTEGER,
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true
+    },
     firstName: DataTypes.STRING,
     lastName: DataTypes.STRING,
-    gender: DataTypes.ENUM,
+    gender: {
+      type:DataTypes.ENUM('M', 'F'),
+      validate: {
+        isIn: ['M', 'F']
+      }
+    },
     bornDate: DataTypes.DATE,
     address: DataTypes.STRING,
     phoneNumber: DataTypes.STRING,
     hashPassword: DataTypes.STRING,
-    email: DataTypes.STRING,
+    email: {
+      type: DataTypes.STRING,
+      validate: {
+        isEmail: true
+      }
+    },
     createdAt: DataTypes.DATE,
     updatedAt: DataTypes.DATE
   }, {
