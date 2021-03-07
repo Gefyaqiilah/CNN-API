@@ -6,6 +6,7 @@ module.exports = {
      firstName: 'Gefy Aqiilah',
      lastName: 'Aqshal',
      gender: 'M',
+     fotoProfile: null,
      bornDate: new Date(),
      address: 'Soreang, Kab. Bandung',
      phoneNumber: '08927483224',

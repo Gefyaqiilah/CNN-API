@@ -23,7 +23,7 @@ module.exports = (sequelize, DataTypes) => {
     gender: {
       type:DataTypes.ENUM('M', 'F'),
       validate: {
-        isIn: ['M', 'F']
+        isIn: ['M', 'F']  
       }
     },
     bornDate: DataTypes.DATE,
@@ -36,6 +36,7 @@ module.exports = (sequelize, DataTypes) => {
         isEmail: true
       }
     },
+    fotoProfile: DataTypes.STRING,
     createdAt: DataTypes.DATE,
     updatedAt: DataTypes.DATE
   }, {

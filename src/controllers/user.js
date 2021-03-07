@@ -1,6 +1,8 @@
 const models = require('../models/index').User;
 const response = require('../helpers/response');
 const bcrypt = require('bcrypt');
+const path = require('path');
+const fs = require('fs');
 
 const userController = {
   getUserById: async(req, res, next) => {
@@ -75,6 +77,30 @@ const userController = {
       response(res, null, {code: 200, status: 'succeed'}, null)
     } catch (error) {
       response(res, null, {code:500, status: 'failed'}, error)
+    }
+  },
+  updateFotoProfile: async(req, res, next) => {
+    const userId = req.params.id
+    if (!req.file) {
+      return response(res, null, {code:404, status: 'failed'}, 'Request foto empty')
+    }
+    const imageUrl = `${process.env.BASE_URL}/foto/${req.file.filename}`
+    try {
+        const checkImageFromDatabase = await models.findOne({ 
+          attributes: ['fotoProfile'],
+          where: {
+            id: userId
+          },
+          raw: true
+        })
+        if (checkImageFromDatabase.fotoProfile) {
+          const deleteStringUrl = checkImageFromDatabase.fotoProfile.replace(`${process.env.BASE_URL}/foto/`, '')
+          const url = path.join(__dirname, '../../uploads', deleteStringUrl)
+          await fs.unlinkSync(url)
+        }
+        await models.update({fotoProfile: imageUrl}, {where: {id: userId}})
+    } catch (error) {
+      response(res, null, {code:500, status: 'failed'}, error.message)
     }
   }
 }
