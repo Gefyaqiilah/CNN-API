@@ -21,10 +21,18 @@ const categoryController = {
   deleteCategory: async(req, res, next) => {
     const categoryId = req.params.id
     try {
+      const checkCategoryIfExist = await models.findAll({ where: { id: categoryId } })
+      if (checkCategoryIfExist.length === 0) {
+        throw { resultError: 'Data not found', code: 404}
+      }
       await models.destroy({ where: { id: categoryId } })
       return response(res, null, {code: 200, status: 'succeed' }, null)
     } catch (error) {
-      return response(res, null, {code: 500, status: 'failed' }, 'Looks like server having trouble')
+      if (error.resultError) {
+        return response(res, null, {code:error.code, status: 'failed'}, error.resultError)
+      } else {
+        return response(res, null, {code:500, status: 'failed'}, 'Looks like server having trouble')
+      }
     }
   },
   updateCategory: async(req, res, next) => {
