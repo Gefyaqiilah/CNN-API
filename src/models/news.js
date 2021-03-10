@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       News.belongsTo(models.User, {
-        foreignKey: 'userId',
+        foreignKey: 'authorId',
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
         as: 'author'

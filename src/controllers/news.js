@@ -34,6 +34,23 @@ const newsController = {
         response(res, null, {code:500, status: 'failed'}, 'Looks like server having trouble')
       }
     }
+  },
+  getAllNews: async(req, res, next) => {
+    const { page = 1, limit = 5 } = req.query
+    const offset = (parseInt(page) - 1) * parseInt(limit)
+    try {
+      const allNews = await models.findAll({
+        limit: parseInt(limit), offset: parseInt(offset),
+        order: [
+          ['createdAt', 'DESC']
+        ], 
+        raw: true
+      })
+      response(res, allNews, {code:200, status: 'success'}, null)
+    } catch (error) {
+      console.log(error)
+      response(res, error.message, {code:500, status: 'failed'}, null)
+    }
   }
 }
 
