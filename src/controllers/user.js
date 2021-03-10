@@ -84,7 +84,7 @@ const userController = {
     if (!req.file) {
       return response(res, null, {code:404, status: 'failed'}, 'Request foto empty')
     }
-    const imageUrl = `${process.env.BASE_URL}/foto/${req.file.filename}`
+    const imageUrl = `${process.env.BASE_URL}/images/${req.file.filename}`
     try {
         const checkImageFromDatabase = await models.findOne({ 
           attributes: ['fotoProfile'],
@@ -94,7 +94,7 @@ const userController = {
           raw: true
         })
         if (checkImageFromDatabase.fotoProfile) {
-          const deleteStringUrl = checkImageFromDatabase.fotoProfile.replace(`${process.env.BASE_URL}/foto/`, '')
+          const deleteStringUrl = checkImageFromDatabase.fotoProfile.replace(`${process.env.BASE_URL}/images/`, '')
           const url = path.join(__dirname, '../../uploads', deleteStringUrl)
           await fs.unlinkSync(url)
         }

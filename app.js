@@ -17,6 +17,8 @@ app.use(bodyParser.json())
 // grouping endpoint
 const routes = require('./src/routes/index');
 app.use('/api', routes)
+// access static files
+app.use('/images', express.static('./uploads'))
 
 // global endpoint
 app.use('*', (req, res, next) => {
