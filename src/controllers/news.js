@@ -34,7 +34,6 @@ const newsController = {
         response(res, null, {code:500, status: 'failed'}, 'Looks like server having trouble')
       }
     }
-    response(res, newsData, { code: 200,status:'success'}, null)
   }
 }
 

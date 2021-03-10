@@ -16,18 +16,17 @@ const limits = {
 
 const fileFilter = (req, file, cb) => {
   const extName = path.extname(file.originalname)
-
   if (extName === '.jpg' || extName === '.png' || extName === 'gif' || extName === 'jpeg') {
     cb(null, true)
   } else {
+    console.log('errro')
     cb(new Error('Rejected: File accepted only JPG, JPEG, GIF & PNG.'))
   }
 }
 
 const upload = multer({
+  fileFilter: fileFilter,
   storage: storage,
   limits: limits,
-  fileFilter: fileFilter
 })
-
 module.exports = upload

@@ -79,7 +79,7 @@ const userController = {
       response(res, null, {code:500, status: 'failed'}, error)
     }
   },
-  updateFotoProfile: async(req, res, next) => {
+  updateFotoProfile: async(req, res) => {
     const userId = req.params.id
     if (!req.file) {
       return response(res, null, {code:404, status: 'failed'}, 'Request foto empty')
@@ -99,6 +99,7 @@ const userController = {
           await fs.unlinkSync(url)
         }
         await models.update({fotoProfile: imageUrl}, {where: {id: userId}})
+        response(res, null, {code:200, status: 'success'}, null)
     } catch (error) {
       response(res, null, {code:500, status: 'failed'}, error.message)
     }
